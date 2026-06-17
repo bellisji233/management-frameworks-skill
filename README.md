@@ -18,14 +18,14 @@
 | 8. 冲突、变革与选才 | 托马斯-基尔曼冲突模式（TKI）、科特 8 步 + ADKAR、结构化招聘 + 30-60-90 |
 | 9. 领导力进阶 | 戈尔曼 6 种领导风格、驱动力 3.0（Pink） |
 
-> 配套学习手册（`docs/index.html`，[在线查看](https://bellisji233.github.io/management-frameworks-skill/)）完整覆盖以上 9 个领域，并附 20 道情境自测题。
+> 配套学习手册（`docs/index.html`，[在线查看](https://bellisji233.github.io/management-frameworks/)）完整覆盖以上 9 个领域，并附 20 道情境自测题。
 
 ## 安装（作为 Claude Code skill 使用）
 
 把本仓库克隆或复制到你的 Claude Code skills 目录，命名为 `management-frameworks`：
 
 ```bash
-git clone <this-repo-url> ~/.claude/skills/management-frameworks
+git clone https://github.com/bellisji233/management-frameworks ~/.claude/skills/management-frameworks
 ```
 
 随后在 Claude Code 中：
@@ -35,11 +35,15 @@ git clone <this-repo-url> ~/.claude/skills/management-frameworks
 
 > `docs/`、`README.md`、`LICENSE` 一并复制进去不影响 skill 运行。
 
+### 在其他 agent 中使用（Codex / Cursor 等）
+
+`SKILL.md` 的自动触发是 Claude 生态专属的。其他 agent 不会自动识别，但内容是纯 Markdown，完全可移植——本仓库已附 [`AGENTS.md`](./AGENTS.md)，读取该文件的 agent（如 OpenAI Codex）会被引导去使用 `SKILL.md` 与 `references/`。也可直接把 `SKILL.md` 内容喂进对方的上下文当知识库用。
+
 ## 学习手册网页
 
 `docs/index.html` 是一份单文件、可离线浏览的管理理论学习手册，包含全部框架、职场案例、反模式提醒与「场景反查索引」。
 
-- **在线查看**：https://bellisji233.github.io/management-frameworks-skill/
+- **在线查看**：https://bellisji233.github.io/management-frameworks/
 - **本地查看**：用浏览器打开 `docs/index.html`
 
 ## 目录结构
@@ -47,6 +51,7 @@ git clone <this-repo-url> ~/.claude/skills/management-frameworks
 ```
 .
 ├── SKILL.md                    # skill 主入口（使用指南 + 全部框架速查）
+├── AGENTS.md                   # 供 Codex 等非 Claude agent 使用的入口
 ├── references/                 # 按需加载的详细资料
 │   ├── unit1-details.md
 │   ├── unit2-situational.md
