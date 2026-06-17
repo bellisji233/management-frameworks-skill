@@ -1,6 +1,6 @@
 # 管理框架系统 · Management Frameworks Skill
 
-一个面向**一线管理者**的 [Claude Code](https://claude.com/claude-code) skill，把成熟的组织行为学理论整理成「遇到问题 → 快速定位 → 匹配 1–2 个框架 → 3 步内可落地的行动」的决策辅助工具。配套一份可离线浏览的学习手册网页。
+一个面向**一线管理者**的管理决策辅助 skill，把成熟的组织行为学理论整理成「遇到问题 → 快速定位 → 匹配 1–2 个框架 → 3 步内可落地的行动」的工具。**原生支持 [Claude Code](https://claude.com/claude-code)，并通过 `AGENTS.md` 兼容 OpenAI Codex、Cursor 等多 agent 平台。** 配套一份可离线浏览的学习手册网页。
 
 > ⚠️ 本项目为**学习整理**用途。所有理论版权归原作者所有；框架解读、案例与排版为教学目的的二次创作。
 
@@ -35,9 +35,19 @@ git clone https://github.com/bellisji233/management-frameworks ~/.claude/skills/
 
 > `docs/`、`README.md`、`LICENSE` 一并复制进去不影响 skill 运行。
 
-### 在其他 agent 中使用（Codex / Cursor 等）
+## 多 Agent 平台适配
 
-`SKILL.md` 的自动触发是 Claude 生态专属的。其他 agent 不会自动识别，但内容是纯 Markdown，完全可移植——本仓库已附 [`AGENTS.md`](./AGENTS.md)，读取该文件的 agent（如 OpenAI Codex）会被引导去使用 `SKILL.md` 与 `references/`。也可直接把 `SKILL.md` 内容喂进对方的上下文当知识库用。
+本 skill 的内容是纯 Markdown，完全可移植。不同平台的接入方式如下：
+
+| 平台 | 自动触发 | 接入方式 |
+|------|:--------:|---------|
+| **Claude Code** | ✅ 原生 | 放进 `~/.claude/skills/`，`/management-frameworks` 或按描述自动触发 |
+| **Claude.ai / Agent SDK / API** | ✅ 原生 | 同样识别 `SKILL.md`（Agent Skills 标准） |
+| **OpenAI Codex** | ✅ 经 `AGENTS.md` | 读取仓库根目录 [`AGENTS.md`](./AGENTS.md)，被引导去用 `SKILL.md` + `references/` |
+| **Cursor** | ⚙️ 需配置 | 把 `SKILL.md` 内容放进 `.cursor/rules/`，或在对话中 `@` 引用 |
+| **其他 agent / 纯人类** | ➖ 手动 | 直接阅读 `SKILL.md`，或把内容喂进对方上下文当知识库 |
+
+> 说明：`SKILL.md` 的「自动按描述触发」是 Claude 生态（Agent Skills 标准）专属能力；[`AGENTS.md`](./AGENTS.md) 让 Codex 等读取该约定的 agent 也能用上同一套诊断流程与框架。
 
 ## 学习手册网页
 
