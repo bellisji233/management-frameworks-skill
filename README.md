@@ -18,7 +18,7 @@
 | 8. 冲突、变革与选才 | 托马斯-基尔曼冲突模式（TKI）、科特 8 步 + ADKAR、结构化招聘 + 30-60-90 |
 | 9. 领导力进阶 | 戈尔曼 6 种领导风格、驱动力 3.0（Pink） |
 
-> 配套学习手册（`handbook/index.html`）完整覆盖以上 9 个领域，并附 20 道情境自测题。
+> 配套学习手册（`docs/index.html`，[在线查看](https://bellisji233.github.io/management-frameworks-skill/)）完整覆盖以上 9 个领域，并附 20 道情境自测题。
 
 ## 安装（作为 Claude Code skill 使用）
 
@@ -33,14 +33,14 @@ git clone <this-repo-url> ~/.claude/skills/management-frameworks
 - 直接输入 `/management-frameworks` 触发，或
 - 描述你的管理问题（如「我手下一个老员工躺平了怎么办」），skill 会按描述自动触发。
 
-> `handbook/`、`README.md`、`LICENSE` 一并复制进去不影响 skill 运行。
+> `docs/`、`README.md`、`LICENSE` 一并复制进去不影响 skill 运行。
 
 ## 学习手册网页
 
-`handbook/index.html` 是一份单文件、可离线浏览的管理理论学习手册，包含全部框架、职场案例、反模式提醒与「场景反查索引」。
+`docs/index.html` 是一份单文件、可离线浏览的管理理论学习手册，包含全部框架、职场案例、反模式提醒与「场景反查索引」。
 
-- **本地查看**：用浏览器打开 `handbook/index.html`
-- **在线查看**：在仓库 Settings → Pages 中将来源设为 `main` 分支的 `/handbook` 目录（或 `/docs`），即可通过 GitHub Pages 访问。
+- **在线查看**：https://bellisji233.github.io/management-frameworks-skill/
+- **本地查看**：用浏览器打开 `docs/index.html`
 
 ## 目录结构
 
@@ -52,8 +52,8 @@ git clone <this-repo-url> ~/.claude/skills/management-frameworks
 │   ├── unit2-situational.md
 │   ├── unit3-details.md
 │   └── worked-examples.md      # 「问题 → 诊断 → 行动」黄金范例
-└── handbook/
-    └── index.html              # 配套学习手册网页
+└── docs/
+    └── index.html              # 配套学习手册网页（GitHub Pages 来源）
 ```
 
 ## 理论引用规范
