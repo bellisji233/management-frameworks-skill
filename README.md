@@ -52,10 +52,16 @@ git clone https://github.com/bellisji233/management-frameworks ~/.claude/skills/
 .
 ├── SKILL.md                    # skill 主入口（使用指南 + 全部框架速查）
 ├── AGENTS.md                   # 供 Codex 等非 Claude agent 使用的入口
-├── references/                 # 按需加载的详细资料
-│   ├── unit1-details.md
-│   ├── unit2-situational.md
-│   ├── unit3-details.md
+├── references/                 # 按需加载的详细资料（每单元一份，含操作步骤、职场案例、反模式）
+│   ├── unit1-details.md         # 管理者效能（14 行为 / 7S / 高潜 10 维度）
+│   ├── unit2-situational.md     # 情境领导力 9 种情境的详细操作
+│   ├── unit3-details.md         # 激励五理论 / Q12 全 12 问 / 团队建设 10 法
+│   ├── unit4-details.md         # 绩效与发展（ABC 话术 / 难管员工处理）
+│   ├── unit5-details.md         # 组织沟通与向上管理（五框架）
+│   ├── unit6-details.md         # 团队动力学（塔克曼 / 心理安全感 / 五大障碍）
+│   ├── unit7-details.md         # 目标决策与执行（OKR / RACI-RAPID / 艾森豪威尔）
+│   ├── unit8-details.md         # 冲突变革选才（TKI / 科特+ADKAR / 结构化招聘）
+│   ├── unit9-details.md         # 领导力进阶（戈尔曼 6 风格 / 驱动力 3.0）
 │   └── worked-examples.md      # 「问题 → 诊断 → 行动」黄金范例
 └── docs/
     └── index.html              # 配套学习手册网页（GitHub Pages 来源）
