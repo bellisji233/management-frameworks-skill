@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理理论学习手册 · Management Frameworks</title>
+<style>
+  :root{
+    --bg:#faf7f2; --card:#ffffff; --ink:#2d2d2d; --mut:#7a7a7a; --line:#ebe4d8;
+    --u1:#5b8def; --u2:#34b27b; --u3:#f0883e; --u4:#c0598f; --u5:#8b6fd4;
+    --u6:#13a89e; --u7:#e0a000; --u8:#d9534f; --u9:#9b5de5;
+    --hl:#ffd93d; --src:#9a8c6f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .layout{display:flex;max-width:1280px;margin:0 auto}
+  /* sidebar nav */
+  nav{position:sticky;top:0;align-self:flex-start;width:240px;height:100vh;overflow-y:auto;padding:32px 20px;border-right:1px solid var(--line);flex:none}
+  nav .logo{font-size:18px;font-weight:900;margin-bottom:6px}
+  nav .logo small{display:block;font-size:11px;color:var(--mut);font-weight:400;letter-spacing:1px;margin-top:2px}
+  nav a{display:block;font-size:13.5px;color:var(--ink);text-decoration:none;padding:7px 12px;border-radius:8px;margin:2px 0;transition:.15s}
+  nav a:hover{background:#f0ebe2}
+  nav a.grp{font-weight:700;margin-top:14px;font-size:14px}
+  nav a .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+  nav a.sub{padding-left:30px;font-size:12.5px;color:var(--mut)}
+  /* content */
+  main{flex:1;min-width:0;padding:40px 48px 100px}
+  header.hero{margin-bottom:36px}
+  .hero h1{font-size:36px;font-weight:900;letter-spacing:-.5px}
+  .hero p{color:var(--mut);font-size:15px;margin-top:8px;max-width:640px}
+  .hero .meta{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font-size:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:5px 12px;color:var(--mut)}
+  /* unit heading */
+  .unit{margin-top:52px;scroll-margin-top:20px}
+  .unit-h{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:2px solid var(--line);margin-bottom:24px}
+  .unit-h .badge{flex:none;width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:900}
+  .unit-h h2{font-size:25px;font-weight:800}
+  .unit-h h2 small{display:block;font-size:13px;color:var(--mut);font-weight:500;letter-spacing:.5px}
+  /* theory card */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:18px;scroll-margin-top:20px}
+  .card h3{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .src{font-size:12px;color:var(--src);background:#f5f0e6;border-radius:6px;padding:2px 9px;font-weight:600}
+  .core{margin:12px 0;font-size:15px}
+  .core b{color:var(--ink)}
+  .lbl{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;color:var(--mut);text-transform:uppercase;margin:14px 0 6px}
+  ul.clean{list-style:none}
+  ul.clean li{padding:5px 0 5px 22px;position:relative;font-size:14.5px}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--u1)}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;background:#faf7f2}
+  td b{color:var(--ink)}
+  .apply{background:#f3f8ff;border-left:3px solid var(--u1);border-radius:0 10px 10px 0;padding:12px 16px;margin-top:12px;font-size:14px}
+  .apply b{color:var(--u1)}
+  .warn{background:#fff6f0;border-left:3px solid var(--u3);border-radius:0 10px 10px 0;padding:12px 16px;margin-top:12px;font-size:14px}
+  .warn b{color:var(--u3)}
+  .mnemonic{display:inline-block;background:var(--hl);border-radius:6px;padding:2px 10px;font-weight:800;font-size:14px}
+  /* diagrams */
+  .matrix{display:grid;grid-template-columns:90px 1fr 1fr 1fr;gap:8px;margin:14px 0}
+  .matrix .cell{border-radius:10px;padding:12px 10px;font-size:13px;text-align:center;border:1px solid var(--line)}
+  .matrix .axis{background:transparent;border:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--mut);font-size:12px}
+  .matrix .sc{background:var(--card);cursor:default}
+  .matrix .sc b{display:block;font-size:14px;margin-bottom:3px;color:var(--ink)}
+  .matrix .sc small{color:var(--mut);font-size:11px}
+  .g-easy{border-color:var(--u2)!important;background:#f1faf5!important}
+  .g-mid{border-color:var(--u3)!important;background:#fff7f0!important}
+  .g-hard{border-color:var(--u4)!important;background:#fdf2f8!important}
+  .pyramid{display:flex;flex-direction:column;align-items:center;gap:5px;margin:14px 0}
+  .pyr{border-radius:8px;color:#fff;text-align:center;padding:9px 0;font-size:13px;font-weight:600}
+  .chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .chain .node{background:#f3f8ff;border:1px solid var(--u1);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--u1)}
+  .chain .arr{color:var(--mut);font-weight:700}
+  .q-layer{border-left:3px solid var(--u3);padding:8px 0 8px 16px;margin:10px 0}
+  .q-layer .lname{font-weight:800;font-size:14px;color:var(--u3)}
+  .q-layer ol{margin:6px 0 0 18px;font-size:13.5px;color:var(--ink)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  .vs .bad{background:#fdf2f4;border:1px solid #f3c5cf;border-radius:10px;padding:12px 14px;font-size:13.5px}
+  .vs .good{background:#f1faf5;border:1px solid #b9e4cd;border-radius:10px;padding:12px 14px;font-size:13.5px}
+  .vs .tag{font-weight:800;font-size:12px;display:block;margin-bottom:5px}
+  .vs .bad .tag{color:#d14d6a} .vs .good .tag{color:#2a9d6f}
+  .foot{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--mut);font-size:12.5px;text-align:center}
+  td a{color:var(--u3);text-decoration:none;font-weight:700;white-space:nowrap}
+  td a:hover{text-decoration:underline}
+  .plain{display:inline-block;background:#eef6ff;color:#3a6ea5;border-radius:5px;padding:1px 8px;font-size:12.5px;font-weight:500;margin-left:4px}
+  .plain::before{content:"人话：";font-weight:700;opacity:.7}
+  /* 学习路径 */
+  .path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .path .p{border-radius:12px;padding:14px 16px;border:1px solid var(--line)}
+  .path .p .who{font-weight:800;font-size:14px;margin-bottom:6px}
+  .path .p .route{font-size:13px;color:var(--mut);line-height:1.6}
+  .path .p .route b{color:var(--ink)}
+  svg.dia{width:100%;height:auto;max-width:460px;display:block;margin:8px auto}
+  .totop{position:fixed;right:28px;bottom:28px;width:46px;height:46px;border-radius:50%;background:#2d2d2d;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:50;transition:.15s}
+  .totop:hover{background:var(--u3);transform:translateY(-2px)}
+  /* 案例 */
+  .case{background:#fbf9f4;border:1px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px}
+  .case .ct{font-weight:800;font-size:12px;letter-spacing:1px;color:var(--src);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .case p{margin:4px 0}
+  .case .scene{color:var(--ink)}
+  .case .move{color:#2a7a52}
+  .case .move b{color:#1f8a5b}
+  /* 自测 */
+  .quiz-h{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:2px solid var(--line);margin:52px 0 24px}
+  .quiz-h .badge{flex:none;width:44px;height:44px;border-radius:13px;background:#2d2d2d;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .quiz-h h2{font-size:25px;font-weight:800}
+  .quiz-h h2 small{display:block;font-size:13px;color:var(--mut);font-weight:500}
+  details.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0;margin-bottom:14px;overflow:hidden}
+  details.q summary{padding:18px 22px;cursor:pointer;font-size:15.5px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:flex-start}
+  details.q summary::-webkit-details-marker{display:none}
+  details.q summary .qn{flex:none;width:26px;height:26px;border-radius:8px;background:#f0ebe2;color:var(--mut);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  details.q summary::after{content:"点击看答案 ▾";margin-left:auto;font-size:12px;color:var(--mut);font-weight:500;white-space:nowrap;align-self:center}
+  details.q[open] summary::after{content:"收起 ▴"}
+  details.q[open] summary{border-bottom:1px solid var(--line)}
+  .ans{padding:16px 22px;font-size:14px;background:#f8fbf9}
+  .ans .key{font-weight:800;color:#1f8a5b}
+  .ans .why{color:var(--mut);margin-top:6px}
+  .qtag{font-size:11px;padding:2px 8px;border-radius:5px;background:#f0ebe2;color:var(--mut);margin-left:auto;align-self:center}
+  @media(max-width:860px){nav{display:none}main{padding:28px 20px 80px}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav>
+  <div class="logo">管理理论手册<small>MANAGEMENT FRAMEWORKS</small></div>
+  <a href="#top">📋 速查总表</a>
+  <a href="#u1" class="grp"><span class="dot" style="background:var(--u1)"></span>一 · 管理者效能</a>
+  <a href="#u2" class="grp"><span class="dot" style="background:var(--u2)"></span>二 · 授权与辅导</a>
+  <a href="#u3" class="grp"><span class="dot" style="background:var(--u3)"></span>三 · 激励与团队</a>
+  <a href="#u4" class="grp"><span class="dot" style="background:var(--u4)"></span>四 · 绩效与面谈</a>
+  <a href="#u5" class="grp"><span class="dot" style="background:var(--u5)"></span>五 · 沟通与向上管理</a>
+  <a href="#u6" class="grp"><span class="dot" style="background:var(--u6)"></span>六 · 团队动力学</a>
+  <a href="#u7" class="grp"><span class="dot" style="background:var(--u7)"></span>七 · 目标·决策·执行</a>
+  <a href="#u8" class="grp"><span class="dot" style="background:var(--u8)"></span>八 · 冲突·变革·选才</a>
+  <a href="#u9" class="grp"><span class="dot" style="background:var(--u9)"></span>九 · 领导力进阶</a>
+  <a href="#quiz" class="grp"><span class="dot" style="background:#2d2d2d"></span>✓ 自测题</a>
+</nav>
+
+<main>
+<header class="hero" id="top">
+  <h1>管理理论学习手册</h1>
+  <p>系统整理 9 大领域、30+ 经典管理框架。每个理论标注学术出处，配核心洞察、管理应用与可视化图，用于系统学习与随时查阅。</p>
+  <div class="meta">
+    <span class="chip">🎓 理论有据 · 标注作者与年份</span>
+    <span class="chip">🧭 9 单元 · 30+ 框架</span>
+    <span class="chip">📊 含可视化图 + 自测题</span>
+  </div>
+</header>
+
+<!-- 学习路径 -->
+<div class="card" style="border:2px solid var(--u2)">
+  <h3>🗺️ 如何使用这份手册（按角色定位，按需取用）</h3>
+  <div class="path">
+    <div class="p" style="background:#f1faf5">
+      <div class="who">🌱 新晋管理者</div>
+      <div class="route">建议从<b>单元二（情境领导力）</b>、<b>单元三（激励/Q12）</b>入手。这两部分对应"因人而异的管理"与"团队激励"，是日常管理中应用频率最高的内容。</div>
+    </div>
+    <div class="p" style="background:#fff7f0">
+      <div class="who">🌿 有经验的主管</div>
+      <div class="route">可重点关注<b>单元四（绩效面谈/难管员工）</b>与<b>单元一（7S/高潜）</b>。核心场景是高难度对话的处理与团队整体诊断。</div>
+    </div>
+    <div class="p" style="background:#f4f1fc">
+      <div class="who">🌳 中层 / 带多团队</div>
+      <div class="route">核心是<b>单元五（向上管理/跨部门）</b>。这一层级的关键挑战通常不在向下管理，而在向上对齐与跨部门协作——让上级与外部清晰地看见团队价值。</div>
+    </div>
+  </div>
+  <div class="apply" style="margin-top:14px"><b>实战场景：</b>建议直接使用下方的 <a href="#scenario-index" style="color:var(--u1);font-weight:700">🧭 场景反查索引</a>，从具体问题出发，快速定位对应框架。</div>
+</div>
+
+<!-- 速查总表 -->
+<div class="card">
+  <h3>📋 理论速查总表</h3>
+  <table>
+    <tr><th>领域</th><th>框架</th><th>来源</th><th>一句话核心</th></tr>
+    <tr><td rowspan="3" style="color:var(--u1);font-weight:700">① 效能</td><td><b>管理者5任务</b></td><td>Drucker 1954</td><td>目标·组织·激励·育人·评估</td></tr>
+    <tr><td><b>高潜10维度</b></td><td>DDI 综合</td><td>识别可培养的领导苗子</td></tr>
+    <tr><td><b>麦肯锡 7S</b></td><td>Peters & Waterman 1980</td><td>硬三角 + 软四角，组织诊断</td></tr>
+    <tr><td rowspan="2" style="color:var(--u2);font-weight:700">② 授权</td><td><b>情境领导力 3×3</b></td><td>Hersey & Blanchard 1969</td><td>能力×意愿，因人施管</td></tr>
+    <tr><td><b>GROW 教练</b></td><td>Whitmore 1992</td><td>目标·现状·选择·意愿</td></tr>
+    <tr><td rowspan="3" style="color:var(--u3);font-weight:700">③ 激励</td><td><b>五大激励理论</b></td><td>Maslow/Herzberg/Skinner/Adams/Vroom</td><td>需求·双因素·强化·公平·期望</td></tr>
+    <tr><td><b>盖洛普 Q12</b></td><td>Gallup 1990s</td><td>敬业度 12 问，找最低分</td></tr>
+    <tr><td><b>STAR 反馈</b></td><td>BEI / DDI</td><td>背景·任务·行动·结果</td></tr>
+    <tr><td rowspan="2" style="color:var(--u4);font-weight:700">④ 绩效</td><td><b>ABC 分层</b></td><td>实践框架</td><td>优秀/符合/欠佳，差异面谈</td></tr>
+    <tr><td><b>三类难管员工</b></td><td>NVC + 认知行为</td><td>留才/纠偏/抱怨处理</td></tr>
+    <tr><td rowspan="2" style="color:var(--u5);font-weight:700">⑤ 向上</td><td><b>信息不对称管理</b></td><td>Akerlof 应用</td><td>看不见 ≠ 没产出</td></tr>
+    <tr><td><b>无职权影响力</b></td><td>Cohen & Bradford 1989</td><td>货币交换，翻译成对方收益</td></tr>
+    <tr><td rowspan="3" style="color:var(--u6);font-weight:700">⑥ 团队</td><td><b>塔克曼 4 阶段</b></td><td>Tuckman 1965</td><td>组建→震荡→规范→高效</td></tr>
+    <tr><td><b>心理安全感</b></td><td>Edmondson 1999</td><td>敢说真话 = 高绩效第一要素</td></tr>
+    <tr><td><b>团队五大障碍</b></td><td>Lencioni 2002</td><td>信任缺失是万恶之源</td></tr>
+    <tr><td rowspan="3" style="color:var(--u7);font-weight:700">⑦ 执行</td><td><b>OKR</b></td><td>Grove / Doerr</td><td>目标 + 可量化关键结果</td></tr>
+    <tr><td><b>RACI / RAPID</b></td><td>Bain</td><td>拍板人必须唯一</td></tr>
+    <tr><td><b>艾森豪威尔矩阵</b></td><td>重要×紧急</td><td>多投资"重要不紧急"</td></tr>
+    <tr><td rowspan="3" style="color:var(--u8);font-weight:700">⑧ 冲突变革</td><td><b>TKI 冲突模式</b></td><td>Thomas & Kilmann 1974</td><td>竞争/回避/迁就/妥协/协作</td></tr>
+    <tr><td><b>科特8步 + ADKAR</b></td><td>Kotter 1996 / Prosci</td><td>组织 + 个人两层一起变</td></tr>
+    <tr><td><b>结构化招聘</b></td><td>实践框架</td><td>以行为题为主，假设题为辅</td></tr>
+    <tr><td rowspan="2" style="color:var(--u9);font-weight:700">⑨ 领导力</td><td><b>戈尔曼6风格</b></td><td>Goleman 2000</td><td>因情境切换风格</td></tr>
+    <tr><td><b>驱动力 3.0</b></td><td>Daniel Pink 2009</td><td>自主·精通·目的</td></tr>
+  </table>
+</div>
+
+<!-- 场景反查索引 -->
+<div class="card" id="scenario-index" style="border:2px solid var(--u3)">
+  <h3>🧭 场景反查索引 <span class="src" style="background:#fff1e6;color:var(--u3)">实战时用：从"问题"找"框架"</span></h3>
+  <p class="core">上面的速查表是<b>"从理论找应用"</b>（学习用）；这张表是<b>"从问题找理论"</b>（实战用）。遇到具体场景，点右侧"跳转"直接到对应章节。</p>
+  <table>
+    <tr><th>你遇到的场景</th><th>该用的框架</th><th>跳转</th></tr>
+    <tr><td><b>能干的老员工躺平了</b></td><td>情境矩阵⑥ 重塑动机 + 期望理论找断点</td><td><a href="#situational">→ 单元二</a></td></tr>
+    <tr><td><b>中能力员工主动性差</b></td><td>情境矩阵⑤ 引导自主 + 双因素（给责任感）</td><td><a href="#motivation">→ 单元三</a></td></tr>
+    <tr><td><b>新人热情高但不会做</b></td><td>情境矩阵① 手把手教</td><td><a href="#situational">→ 单元二</a></td></tr>
+    <tr><td><b>能力强但态度差、带坏氛围</b></td><td>情境矩阵⑨ 警示对话</td><td><a href="#situational">→ 单元二</a></td></tr>
+    <tr><td><b>明星员工提离职</b></td><td>留才 4 步</td><td><a href="#difficult">→ 单元四</a></td></tr>
+    <tr><td><b>员工自我评价过高</b></td><td>数据准备 → 引导自我发现 → 共识计划</td><td><a href="#difficult">→ 单元四</a></td></tr>
+    <tr><td><b>有人持续抱怨</b></td><td>抱怨处理 5 法（NVC）</td><td><a href="#difficult">→ 单元四</a></td></tr>
+    <tr><td><b>团队氛围差、离职率高</b></td><td>盖洛普 Q12（找最低分项）</td><td><a href="#q12">→ 单元三</a></td></tr>
+    <tr><td><b>普涨薪后士气却没持续</b></td><td>双因素理论（钱是保健因素）</td><td><a href="#motivation">→ 单元三</a></td></tr>
+    <tr><td><b>接手新团队 / 绩效下滑溯源</b></td><td>麦肯锡 7S 扫描</td><td><a href="#7s">→ 单元一</a></td></tr>
+    <tr><td><b>不知道谁值得重点培养</b></td><td>高潜 10 维度</td><td><a href="#hipo">→ 单元一</a></td></tr>
+    <tr><td><b>老板觉得"你们没产出"</b></td><td>信息不对称（先分清认知 vs 资源问题）</td><td><a href="#asymmetry">→ 单元五</a></td></tr>
+    <tr><td><b>向上汇报总是很被动</b></td><td>约束转译为决策语言</td><td><a href="#report">→ 单元五</a></td></tr>
+    <tr><td><b>跨部门 / 外部推不动事</b></td><td>无职权影响力（货币交换）</td><td><a href="#influence">→ 单元五</a></td></tr>
+    <tr><td><b>不会辅导，总忍不住给答案</b></td><td>GROW 教练模型</td><td><a href="#grow">→ 单元二</a></td></tr>
+    <tr><td><b>表扬了却没效果</b></td><td>强化理论 + STAR（及时具体）</td><td><a href="#star">→ 单元三</a></td></tr>
+    <tr><td><b>新团队蜜月后突然内讧</b></td><td>塔克曼"震荡期"（正常必经）</td><td><a href="#tuckman">→ 单元六</a></td></tr>
+    <tr><td><b>开会没人敢提反对意见</b></td><td>心理安全感不足</td><td><a href="#safety">→ 单元六</a></td></tr>
+    <tr><td><b>表面和气、执行却打折</b></td><td>团队五大障碍（信任缺失）</td><td><a href="#lencioni">→ 单元六</a></td></tr>
+    <tr><td><b>目标定了却没法衡量</b></td><td>OKR（O + 可量化 KR）</td><td><a href="#okr">→ 单元七</a></td></tr>
+    <tr><td><b>决策扯皮、谁都不拍板</b></td><td>RACI / RAPID（唯一 Decider）</td><td><a href="#raci">→ 单元七</a></td></tr>
+    <tr><td><b>每天救火、没空做重要的事</b></td><td>艾森豪威尔矩阵（投资第二象限）</td><td><a href="#eisenhower">→ 单元七</a></td></tr>
+    <tr><td><b>员工总和人起冲突</b></td><td>TKI 冲突模式（因情境切换）</td><td><a href="#tki">→ 单元八</a></td></tr>
+    <tr><td><b>推新流程没人用</b></td><td>ADKAR（多半卡在"意愿"）</td><td><a href="#change">→ 单元八</a></td></tr>
+    <tr><td><b>招人凭眼缘老踩坑</b></td><td>结构化面试（问行为题）</td><td><a href="#hiring">→ 单元八</a></td></tr>
+    <tr><td><b>给奖金核心员工却没劲</b></td><td>驱动力3.0（自主·精通·目的）</td><td><a href="#drive">→ 单元九</a></td></tr>
+    <tr><td><b>不知道何时用什么领导方式</b></td><td>戈尔曼6风格（情境切换）</td><td><a href="#goleman">→ 单元九</a></td></tr>
+  </table>
+</div>
+
+<!-- ============ 单元一 ============ -->
+<section class="unit" id="u1">
+  <div class="unit-h"><span class="badge" style="background:var(--u1)">1</span>
+    <h2>管理者效能<small>MANAGER EFFECTIVENESS · 我该把精力放在哪</small></h2></div>
+
+  <div class="card">
+    <h3>⚖️ 管理天平</h3>
+    <p class="core"><b>业务管理 ↔ 团队管理</b>，两端的比重随团队成熟度动态调整。团队越成熟，越往"团队管理"倾斜（放手、赋能）；团队越新，越需要"业务管理"（亲自下场、定标准）。</p>
+  </div>
+
+  <div class="card" id="drucker">
+    <h3>🎯 管理者 5 核心任务 <span class="src">Peter Drucker《管理的实践》1954</span></h3>
+    <p class="core">现代管理学之父 Drucker 定义的管理者不可外包的 5 件事：</p>
+    <ul class="clean">
+      <li><b>制定目标</b>——确定要达成什么，并分解对齐</li>
+      <li><b>组织工作</b>——把工作分类、分配，搭建结构</li>
+      <li><b>激励与沟通</b>——把一群人变成一个团队</li>
+      <li><b>培养人才</b>——发展下属，包括自己</li>
+      <li><b>绩效评估</b>——设定衡量标准，评估结果</li>
+    </ul>
+  </div>
+
+  <div class="card" id="hipo">
+    <h3>🌱 高潜人才识别：10 维度 <span class="src">DDI / 领导力发展实证综合</span></h3>
+    <p class="core">用于识别、评估、培养可堪大任的"领导苗子"。注意：<b>绩效高 ≠ 潜力高</b>，潜力看的是这 10 项综合。</p>
+    <table>
+      <tr><th>维度</th><th>观察信号</th></tr>
+      <tr><td><b>领导意愿</b></td><td>主动承担责任，真心想带人</td></tr>
+      <tr><td><b>价值观匹配</b></td><td>行为与组织文化一致</td></tr>
+      <tr><td><b>卓越绩效</b></td><td>持续高于预期</td></tr>
+      <tr><td><b>正直真诚</b></td><td>言行一致，透明坦诚</td></tr>
+      <tr><td><b>培养他人</b></td><td>主动分享，乐于辅导</td></tr>
+      <tr><td><b>获得结果</b></td><td>结果导向，不找借口</td></tr>
+      <tr><td><b>影响他人</b></td><td>无职权也能推动协作</td></tr>
+      <tr><td><b>应变能力</b></td><td>不确定性下保持稳定</td></tr>
+      <tr><td><b>学习能力</b></td><td>快速吸收新知识技能</td></tr>
+      <tr><td><b>认知复杂度</b></td><td>处理模糊复杂问题的能力</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="7s">
+    <h3>🏛️ 麦肯锡 7S 诊断模型 <span class="src">Peters & Waterman, McKinsey 1980</span></h3>
+    <p class="core">组织诊断经典工具。7 个要素分两组：<b>硬性三角</b>（相对易改）和<b>软性四角</b>（根植文化，难改）。七要素相互牵连，<b>共同价值观</b>居中——动一个，会牵动其它。</p>
+    <svg class="dia" viewBox="0 0 440 340">
+      <g stroke="#d9cfc0" stroke-width="1.4">
+        <line x1="220" y1="170" x2="220" y2="58"/><line x1="220" y1="170" x2="326" y2="114"/>
+        <line x1="220" y1="170" x2="326" y2="226"/><line x1="220" y1="170" x2="220" y2="282"/>
+        <line x1="220" y1="170" x2="114" y2="226"/><line x1="220" y1="170" x2="114" y2="114"/>
+        <line x1="220" y1="58" x2="326" y2="114"/><line x1="326" y1="114" x2="326" y2="226"/>
+        <line x1="326" y1="226" x2="220" y2="282"/><line x1="220" y1="282" x2="114" y2="226"/>
+        <line x1="114" y1="226" x2="114" y2="114"/><line x1="114" y1="114" x2="220" y2="58"/>
+      </g>
+      <!-- 硬三角(蓝) -->
+      <g><circle cx="220" cy="58" r="40" fill="#eef4ff" stroke="var(--u1)" stroke-width="1.5"/><text x="220" y="56" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u1)">战略</text><text x="220" y="71" text-anchor="middle" font-size="9" fill="#7a8db0">Strategy</text></g>
+      <g><circle cx="326" cy="114" r="40" fill="#eef4ff" stroke="var(--u1)" stroke-width="1.5"/><text x="326" y="112" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u1)">结构</text><text x="326" y="127" text-anchor="middle" font-size="9" fill="#7a8db0">Structure</text></g>
+      <g><circle cx="326" cy="226" r="40" fill="#eef4ff" stroke="var(--u1)" stroke-width="1.5"/><text x="326" y="224" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u1)">制度</text><text x="326" y="239" text-anchor="middle" font-size="9" fill="#7a8db0">Systems</text></g>
+      <!-- 软四角(绿) -->
+      <g><circle cx="220" cy="282" r="40" fill="#effaf3" stroke="var(--u2)" stroke-width="1.5"/><text x="220" y="280" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u2)">技能</text><text x="220" y="295" text-anchor="middle" font-size="9" fill="#5a9a78">Skills</text></g>
+      <g><circle cx="114" cy="226" r="40" fill="#effaf3" stroke="var(--u2)" stroke-width="1.5"/><text x="114" y="224" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u2)">风格</text><text x="114" y="239" text-anchor="middle" font-size="9" fill="#5a9a78">Style</text></g>
+      <g><circle cx="114" cy="114" r="40" fill="#effaf3" stroke="var(--u2)" stroke-width="1.5"/><text x="114" y="112" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u2)">员工</text><text x="114" y="127" text-anchor="middle" font-size="9" fill="#5a9a78">Staff</text></g>
+      <!-- 中心 -->
+      <circle cx="220" cy="170" r="48" fill="#fdeef6" stroke="var(--u4)" stroke-width="2"/>
+      <text x="220" y="166" text-anchor="middle" font-size="14" font-weight="800" fill="var(--u4)">共同价值观</text>
+      <text x="220" y="183" text-anchor="middle" font-size="9" fill="#b07a9a">Shared Values</text>
+    </svg>
+    <p style="text-align:center;font-size:12px;color:var(--mut);margin:-2px 0 8px">🔵 硬性三角（易变） · 🟢 软性四角（难变） · 🟣 居中：文化内核</p>
+    <table>
+      <tr><th>硬性三角（易变）</th><th>说明</th></tr>
+      <tr><td><b>战略 Strategy</b></td><td>方向是否清晰，资源是否匹配</td></tr>
+      <tr><td><b>结构 Structure</b></td><td>汇报关系、职责划分、协作机制</td></tr>
+      <tr><td><b>制度 Systems</b></td><td>流程、规则、考核体系</td></tr>
+    </table>
+    <table>
+      <tr><th>软性四角（难变）</th><th>说明</th></tr>
+      <tr><td><b>共同价值观 Shared Values</b></td><td>团队信念与文化基因（核心）</td></tr>
+      <tr><td><b>风格 Style</b></td><td>领导风格与决策方式</td></tr>
+      <tr><td><b>员工 Staff</b></td><td>人才结构、能力分布</td></tr>
+      <tr><td><b>技能 Skills</b></td><td>团队核心能力所在</td></tr>
+    </table>
+    <div class="apply"><b>使用场景：</b>接手新团队快速扫描 · 绩效下滑溯源（从症状倒推哪个 S 出问题）· 变革阻力评估。</div>
+    <div class="warn"><b>⚠️ 反模式：</b>7S 是"扫描诊断"工具，不是行动清单。别七个维度同时改——找到<b>最薄弱的那个 S</b> 先动。软四角见效慢，急于求成往往事倍功半。</div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你接手一个交付总延期的技术团队。表面看是"执行力差"（Skills），但用 7S 扫描后发现：战略清晰、人也能干，真正的病根是<b>Systems（制度）</b>——没有需求评审流程，产品天天插队改需求。</p>
+      <p class="move"><b>→ 行动：</b>不去逼大家加班（错把症状当病根），而是先立一个需求冻结/变更评审制度。改对那个最薄弱的 S，延期问题自然缓解。</p></div>
+  </div>
+
+  <div class="card" id="14">
+    <h3>🛠️ 管理者 14 种行为（事前/中/后）</h3>
+    <p class="core">把管理动作按时间轴拆成 14 项，覆盖一件事的全生命周期：</p>
+    <span class="lbl">行动前 · 事前管理</span>
+    <ul class="clean">
+      <li><b>设定期望</b>：明确角色职责、绩效标准、行为边界</li>
+      <li><b>目标管理</b>：SMART 目标设定、分解与对齐</li>
+      <li><b>自由选法</b>：在边界内赋予下属选择方法的空间</li>
+      <li><b>委派任务</b>：按能力意愿矩阵匹配任务难度</li>
+      <li><b>一般指导</b>：日常方向性指引，非过度管控</li>
+    </ul>
+    <span class="lbl">行动中 · 过程管理</span>
+    <ul class="clean">
+      <li><b>绩效对话</b>：定期 1对1，聚焦进展与障碍</li>
+      <li><b>问题解决（5步）</b>：定义→分析→生成方案→选择执行→复盘</li>
+      <li><b>冲突对话</b>：事实陈述→影响说明→期望表达→共识寻求</li>
+      <li><b>提供反馈</b>：SBI 模型（情境 Situation→行为 Behavior→影响 Impact）</li>
+      <li><b>辅导对话</b>：GROW 模型（见单元二）</li>
+    </ul>
+    <span class="lbl">行动后 · 事后管理</span>
+    <ul class="clean">
+      <li><b>认可激励</b>：及时、具体、公开的正向强化</li>
+      <li><b>培养他人</b>：70-20-10 原则（70%实践 / 20%他人 / 10%培训）</li>
+      <li><b>汇报表达</b>：结论先行、数据支撑、建议可行</li>
+      <li><b>复盘总结</b>：目标回顾→结果评估→原因分析→经验提炼</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 单元二 ============ -->
+<section class="unit" id="u2">
+  <div class="unit-h"><span class="badge" style="background:var(--u2)">2</span>
+    <h2>授权、跟进与辅导<small>DELEGATION & COACHING · 怎么因人施管</small></h2></div>
+
+  <div class="card">
+    <h3>📶 执行质量四层次</h3>
+    <div class="chain">
+      <span class="node" style="border-color:var(--u2);color:var(--u2);background:#f1faf5">做了<br><small>主动性</small></span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u2);color:var(--u2);background:#f1faf5">做完<br><small>计划性</small></span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u2);color:var(--u2);background:#f1faf5">做对<br><small>专业性</small></span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u2);color:var(--u2);background:#f1faf5">做好<br><small>敬业性</small></span>
+    </div>
+    <p class="core">从"做了"到"做好"是递进的。员工卡在哪一层，管理的着力点就不同——"主动性"差是动机问题，"专业性"差是能力问题。</p>
+  </div>
+
+  <div class="card" id="delegate">
+    <h3>📤 授权流程：3想 · 6选 · 5谈 · 3跟</h3>
+    <table>
+      <tr><td><b>3想</b>（授权前）</td><td>Why 授权 · What 授权 · How 授权</td></tr>
+      <tr><td><b>6选</b>（选人维度）</td><td>能力 · 意愿 · 时间 · 资源 · 经验 · 信任</td></tr>
+      <tr><td><b>5谈</b>（授权对话）</td><td>WHAT 任务 → WHY 意义 → HOW 方法 → ACTION 确认 → SUPPORT 承诺</td></tr>
+      <tr><td><b>3跟</b>（跟进方式）</td><td>定期汇报 · 关键节点检查 · 异常预警</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="situational">
+    <h3>🎛️ 情境领导力 3×3 矩阵 <span class="src">Hersey & Blanchard 1969（扩展为3×3）</span></h3>
+    <p class="core"><b>核心原则：</b>领导风格要跟随员工的"能力 × 意愿"动态调整，<b>不能用同一种方式管所有人</b>。先定位员工在哪一格，再用对应方法。</p>
+    <div class="matrix">
+      <div class="cell axis"></div>
+      <div class="cell axis">低能力</div><div class="cell axis">中能力</div><div class="cell axis">高能力</div>
+      <div class="cell axis">高意愿</div>
+      <div class="cell sc g-easy"><b>① 手把手教</b><small>新人/转岗，热情高但不会</small></div>
+      <div class="cell sc g-mid"><b>④ GROW 辅导</b><small>有基础有热情，等突破</small></div>
+      <div class="cell sc g-easy"><b>⑦ 充分授权</b><small>明星员工，不用管</small></div>
+      <div class="cell axis">中意愿</div>
+      <div class="cell sc g-mid"><b>② 激发信心</b><small>想做但不敢，觉得不行</small></div>
+      <div class="cell sc g-mid"><b>⑤ 引导自主</b><small>能做但等安排，不主动</small></div>
+      <div class="cell sc g-mid"><b>⑧ 给予挑战</b><small>能力强但缺新鲜感</small></div>
+      <div class="cell axis">低意愿</div>
+      <div class="cell sc g-hard"><b>③ 坦诚对话</b><small>既不会又消极</small></div>
+      <div class="cell sc g-hard"><b>⑥ 重塑动机</b><small>老员工开始躺平</small></div>
+      <div class="cell sc g-hard"><b>⑨ 警示对话</b><small>能力强但态度消极</small></div>
+    </div>
+    <span class="lbl">九种情境 · 操作要点</span>
+    <table>
+      <tr><th>情境</th><th>操作核心</th><th>最常见错误</th></tr>
+      <tr><td><b>① 手把手教</b></td><td>示范→陪练→独立，密集反馈，出错前纠正</td><td>直接充分授权，新人会懵</td></tr>
+      <tr><td><b>② 激发信心</b></td><td>拆小目标先制造成功体验，"上次你做得不错"</td><td>只鼓励不给抓手——信心是做出来的</td></tr>
+      <tr><td><b>③ 坦诚对话</b></td><td>说现状(数据)→说影响→给期限和支持→明确后果</td><td>拖着不处理，越拖越难</td></tr>
+      <tr><td><b>④ GROW 辅导</b></td><td>用提问引导自我发现，少给答案</td><td>直接给答案，剥夺成长</td></tr>
+      <tr><td><b>⑤ 引导自主</b></td><td>交事前加"提案环节"，给小项目自主决策</td><td>继续手把手，养成依赖</td></tr>
+      <tr><td><b>⑥ 重塑动机</b></td><td>先搞清为什么躺平（委屈/迷茫/看不到头）再对症</td><td>不问原因直接激励，效果为零</td></tr>
+      <tr><td><b>⑦ 充分授权</b></td><td>给资源给空间减干涉，定期对齐方向，争取更大平台</td><td>管太多，把明星管跑了</td></tr>
+      <tr><td><b>⑧ 给予挑战</b></td><td>更大项目/跨部门/带新人，给新的意义感</td><td>只给新任务，不给新意义</td></tr>
+      <tr><td><b>⑨ 警示对话</b></td><td>说影响→探原因→明确边界→约定改变节点</td><td>因能力强而容忍——传染性最强</td></tr>
+    </table>
+    <div class="warn"><b>⚠️ 动态更新：</b>员工状态会变，画像每季度更新（重大任务后/绩效面谈后/行为明显变化时）。<b>用同一个格子长期管一个已变化的员工，是最常见的管理失效原因。</b></div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">同一个团队里：小王是热情新人（低能力+高意愿，①），老张是躺平老将（高能力+低意愿，⑥）。你若对小王"充分授权"，他会懵；对老张"手把手教"，他觉得被冒犯。</p>
+      <p class="move"><b>→ 行动：</b>对小王密集示范陪练、多肯定意愿；对老张先 1:1 搞清为什么躺平（委屈？迷茫？），再对症。<b>同一个团队，两种完全不同的带法。</b></p></div>
+  </div>
+
+  <div class="card" id="grow">
+    <h3>🌿 GROW 教练模型 <span class="src">John Whitmore《Coaching for Performance》1992</span></h3>
+    <div class="chain">
+      <span class="node">G · Goal 目标</span><span class="arr">→</span>
+      <span class="node">R · Reality 现状</span><span class="arr">→</span>
+      <span class="node">O · Options 选择</span><span class="arr">→</span>
+      <span class="node">W · Will 行动意愿</span>
+    </div>
+    <ul class="clean">
+      <li><b>Goal</b>：你想达到什么目标？</li>
+      <li><b>Reality</b>：现在卡在哪里？</li>
+      <li><b>Options</b>：有哪些方法可以试？</li>
+      <li><b>Will</b>：你打算怎么做，什么时候开始？</li>
+    </ul>
+    <div class="apply"><b>核心原则：</b>少给答案，多问开放式问题，让员工<b>自己发现</b>。适用于「中能力 + 高意愿」的辅导。</div>
+    <div class="warn"><b>⚠️ 反模式：</b>对"低意愿"的人用 GROW——动机问题不是辅导能解的，得先解决意愿（⑥ 重塑动机）。</div>
+  </div>
+</section>
+
+<!-- ============ 单元三 ============ -->
+<section class="unit" id="u3">
+  <div class="unit-h"><span class="badge" style="background:var(--u3)">3</span>
+    <h2>激励、沟通与团队建设<small>MOTIVATION & TEAM BUILDING · 怎么点燃人</small></h2></div>
+
+  <div class="card" id="motivation">
+    <h3>🔥 五大激励理论</h3>
+
+    <span class="lbl">马斯洛需求层次 <span class="src" style="margin-left:6px">Maslow 1943</span></span>
+    <p class="core">人有 5 层需求，满足低层后才追求高层。<b>员工没动力？先判断他卡在哪一层。</b></p>
+    <div class="pyramid">
+      <div class="pyr" style="background:#c0598f;width:46%">自我实现 · 挑战性工作、成长空间</div>
+      <div class="pyr" style="background:#e07b9a;width:56%">尊重需求 · 认可、职称、成就感</div>
+      <div class="pyr" style="background:#f0883e;width:66%">社交需求 · 团队归属、同事关系</div>
+      <div class="pyr" style="background:#f0a85e;width:76%">安全需求 · 工作稳定、规则公平</div>
+      <div class="pyr" style="background:#5b8def;width:86%">生理需求 · 薪资、基础福利</div>
+    </div>
+
+    <span class="lbl">双因素理论 <span class="src" style="margin-left:6px">Herzberg 1959</span></span>
+    <p class="core"><b>满意 ≠ 不满意的对立面</b>。这是最反直觉、也最重要的一条。</p>
+    <div class="vs">
+      <div class="bad"><span class="tag">保健因素（消除不满）</span>薪资 · 环境 · 政策 · 上司关系<br><b>→ 单靠加薪只能减少抱怨，不能激发热情</b></div>
+      <div class="good"><span class="tag">激励因素（产生满意）</span>成就感 · 认可 · 成长 · 责任感<br><b>→ 真正的激励要给成就和成长机会</b></div>
+    </div>
+
+    <span class="lbl">强化理论 <span class="src" style="margin-left:6px">Skinner 行为主义</span></span>
+    <p class="core">行为的结果决定行为是否重复。</p>
+    <table>
+      <tr><th>方式</th><th>操作</th><th>结果</th></tr>
+      <tr><td><b>正强化</b></td><td>好行为 → 奖励</td><td>行为增加</td></tr>
+      <tr><td><b>负强化</b></td><td>消除负面 → 好行为</td><td>行为增加</td></tr>
+      <tr><td><b>消退</b></td><td>好行为 → 忽视</td><td>行为减少</td></tr>
+      <tr><td><b>惩罚</b></td><td>坏行为 → 惩罚</td><td>行为减少</td></tr>
+    </table>
+    <div class="apply"><b>管理应用：</b>及时、具体的表扬，是最低成本的激励工具。</div>
+
+    <span class="lbl">公平理论 <span class="src" style="margin-left:6px">Adams 1963</span></span>
+    <p class="core">员工比较的是<b>投入产出比</b>，不是绝对值。比较对象：同部门同事、历史薪资、外部市场。</p>
+    <div class="apply"><b>管理应用：</b>薪资透明度要谨慎管理；解释晋升/决策的依据，管理"公平感知"。</div>
+
+    <span class="lbl">期望理论 <span class="src" style="margin-left:6px">Vroom 1964</span></span>
+    <p class="core">动力 = 三个链条都要强，缺一不可：</p>
+    <div class="chain">
+      <span class="node">努力</span><span class="arr">→①能力感知→</span>
+      <span class="node">绩效</span><span class="arr">→②兑现信任→</span>
+      <span class="node">奖励</span><span class="arr">→③价值契合→</span>
+      <span class="node">想要</span>
+    </div>
+    <ul class="clean">
+      <li><b>链条1 · 能力感知</b>：我努力，能提升绩效吗？</li>
+      <li><b>链条2 · 兑现信任</b>：绩效好，真的会有奖励吗？</li>
+      <li><b>链条3 · 价值契合</b>：这个奖励是我想要的吗？</li>
+    </ul>
+    <div class="apply"><b>管理应用：</b>员工没努力，先查哪个链条断了——这是诊断"躺平"的金钥匙。奖励要匹配个人需求，不是所有人都要钱。</div>
+    <div class="warn"><b>⚠️ 反模式：</b>只靠加薪、用一种激励对所有人、表扬泛泛（"你很棒"）。强化要"及时+具体"才有效。</div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你给团队普涨了薪，本以为士气会高涨，结果两个月后大家又恢复到老样子，甚至有人开始抱怨"涨得不如隔壁组多"。</p>
+      <p class="move"><b>→ 诊断：</b>钱是<b>保健因素</b>（双因素理论）——只能短暂消除不满，不能持续激励；而抱怨"不如隔壁"是<b>公平理论</b>在起作用（比的是相对值）。真正点燃人的，是给成就感、成长和责任（激励因素）。</p></div>
+  </div>
+
+  <div class="card" id="q12">
+    <h3>📊 盖洛普 Q12 员工敬业度 <span class="src">Gallup 1990s · 覆盖数百万员工实证</span></h3>
+    <p class="core">12 个问题分四层（营地比喻：先扎营，再贡献，再归属，再成长）。<b>用法：匿名 1–5 分打分，找团队最低分项优先改善。</b></p>
+    <div class="q-layer"><div class="lname">第1层 · 基本需求（我得到了什么）</div>
+      <ol><li>我知道对我的工作要求吗？</li><li>我有做好工作所需的材料和设备吗？</li></ol></div>
+    <div class="q-layer"><div class="lname">第2层 · 管理支持（我能做贡献吗）</div>
+      <ol start="3"><li>每天我都有机会做我最擅长的事吗？</li><li>过去7天，我因工作出色受到表扬吗？</li><li>我感觉上司或同事关心我吗？</li><li>公司有人鼓励我的发展吗？</li></ol></div>
+    <div class="q-layer"><div class="lname">第3层 · 团队归属（我属于这里吗）</div>
+      <ol start="7"><li>我的意见被重视吗？</li><li>公司的使命让我觉得工作重要吗？</li><li>同事们致力于高质量工作吗？</li><li>我在工作中有最好的朋友吗？</li></ol></div>
+    <div class="q-layer"><div class="lname">第4层 · 成长（如何共同成长）</div>
+      <ol start="11"><li>过去6个月，有人与我谈及我的进步吗？</li><li>过去一年，我有学习和成长的机会吗？</li></ol></div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">团队气氛低迷、离职率上升，你不知道从哪下手。做了一轮匿名 Q12 打分，发现 Q4（受到表扬）和 Q11（谈及进步）分数最低。</p>
+      <p class="move"><b>→ 行动：</b>不必大刀阔斧改制度——先从最低分项入手：建立每周即时认可机制 + 每月一次成长对话。<b>Q12 的价值就是帮你把"氛围差"这种模糊问题，定位到具体可改的那一项。</b></p></div>
+  </div>
+
+  <div class="card" id="star">
+    <h3>⭐ STAR 反馈法 <span class="src">行为面试法 BEI · DDI 推广</span></h3>
+    <div class="chain">
+      <span class="node">S · Situation 背景</span><span class="arr">→</span>
+      <span class="node">T · Task 任务</span><span class="arr">→</span>
+      <span class="node">A · Action 行动</span><span class="arr">→</span>
+      <span class="node">R · Result 结果</span>
+    </div>
+    <div class="apply"><b>应用：</b>表扬、辅导、绩效面谈、向上汇报都适用。让反馈"对事不对人"、有据可依。</div>
+  </div>
+
+  <div class="card" id="team">
+    <h3>🤝 团队建设 10 种方法</h3>
+    <table>
+      <tr><th>类别</th><th>方法</th></tr>
+      <tr><td><b>知识类</b></td><td>读书会 · 案例研讨 · 经验萃取</td></tr>
+      <tr><td><b>能力类</b></td><td>轮岗 · 竞赛</td></tr>
+      <tr><td><b>文化类</b></td><td>兴趣社群 · 生日关怀 · 团队聚餐 · 入职/晋升仪式 · 运动活动</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 单元四 ============ -->
+<section class="unit" id="u4">
+  <div class="unit-h"><span class="badge" style="background:var(--u4)">4</span>
+    <h2>绩效评估与发展面谈<small>PERFORMANCE & DEVELOPMENT · 怎么评、怎么谈</small></h2></div>
+
+  <div class="card">
+    <h3>📐 绩效评估三维度</h3>
+    <ul class="clean">
+      <li><b>业绩</b>：目标完成率，量化数据</li>
+      <li><b>能力</b>：胜任力行为评估</li>
+      <li><b>态度</b>：敬业度与工作作风</li>
+    </ul>
+  </div>
+
+  <div class="card" id="abc">
+    <h3>🔤 ABC 员工分层应对</h3>
+    <table>
+      <tr><th>类型</th><th>面谈策略</th><th>重点</th></tr>
+      <tr><td><b>A 类</b>（优秀）</td><td>认可 → 自评 → 挑战 → 需求 → 展望</td><td>留住 + 给更大舞台</td></tr>
+      <tr><td><b>B 类</b>（符合）</td><td>自评 → 激励 → 提升路径 → 支持</td><td>稳住 + 推动成长</td></tr>
+      <tr><td><b>C 类</b>（欠佳）</td><td>坦诚 → 认可 → 诉求 → 改进 → 安排</td><td>明确边界 + 给机会</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="difficult">
+    <h3>🧩 三类高难度员工处理</h3>
+    <span class="lbl">A 类员工提离职 · 留才 4 步</span>
+    <div class="chain"><span class="node" style="background:#fdf2f8;border-color:var(--u4);color:var(--u4)">真诚挽留</span><span class="arr">→</span><span class="node" style="background:#fdf2f8;border-color:var(--u4);color:var(--u4)">倾听诉求</span><span class="arr">→</span><span class="node" style="background:#fdf2f8;border-color:var(--u4);color:var(--u4)">分析判别<br><small>可解决/不可解决</small></span><span class="arr">→</span><span class="node" style="background:#fdf2f8;border-color:var(--u4);color:var(--u4)">有条件接一接</span></div>
+
+    <span class="lbl">B 类员工自我评价过高 · 3 步</span>
+    <ul class="clean"><li><b>数据充分准备</b>——用事实说话</li><li><b>引导其自我发现差距</b>——不是你下结论</li><li><b>共识具体行动计划</b></li></ul>
+
+    <span class="lbl">C 类员工持续抱怨 · 5 法 <span class="src" style="margin-left:6px">基于 NVC 非暴力沟通 + 认知行为</span></span>
+    <div class="chain"><span class="node">倾听</span><span class="arr">→</span><span class="node">视角转移</span><span class="arr">→</span><span class="node">同理心回应</span><span class="arr">→</span><span class="node">横向比较</span><span class="arr">→</span><span class="node">升级对话<br><small>引入上级</small></span></div>
+  </div>
+
+  <div class="card">
+    <h3>💬 积极面谈法</h3>
+    <div class="chain"><span class="node">充分准备</span><span class="arr">→</span><span class="node">营造安全感</span><span class="arr">→</span><span class="node">双向对话</span><span class="arr">→</span><span class="node">聚焦未来</span><span class="arr">→</span><span class="node">明确行动</span></div>
+    <div class="warn"><b>⚠️ 反模式：</b>① 绩效面谈只谈过去、只算账——重点应是"未来怎么改"；② 对 C 类只给压力不给路径；③ 因为能力强就容忍态度问题（该警示还得警示）。</div>
+  </div>
+</section>
+
+<!-- ============ 单元五 ============ -->
+<section class="unit" id="u5">
+  <div class="unit-h"><span class="badge" style="background:var(--u5)">5</span>
+    <h2>组织沟通与向上管理<small>UPWARD MANAGEMENT · 怎么让上级和外部看见价值</small></h2></div>
+
+  <div class="card">
+    <h3>🧭 核心诊断：先分清两类问题</h3>
+    <p class="core">管理者的组织级挑战，通常混合了两类<b>独立</b>问题。<b>关键原则：两类不能混着解——光解释没用，光加速也没用。</b></p>
+    <div class="vs">
+      <div class="bad"><span class="tag">问题 A · 认知/信息问题</span>外部/上级看不见你在做什么<br><b>→ 解法：信息透明化，主动管理预期</b></div>
+      <div class="good"><span class="tag">问题 B · 资源/能力问题</span>真实的执行限制（技术债、人力、能力缺口）<br><b>→ 解法：显性化约束，向上争取资源</b></div>
+    </div>
+  </div>
+
+  <div class="card" id="asymmetry">
+    <h3>👁️ 框架一：信息不对称管理 <span class="src">Akerlof 信息不对称理论的应用</span></h3>
+    <p class="core">外部不认可团队产出，本质往往是<b>信息不对称</b><span class="plain">你知道、对方不知道，于是误判你"没干活"</span>，而非真的产出不足。三个动作：</p>
+    <ul class="clean">
+      <li><b>过程可见化</b>：不等交付才露出，里程碑主动同步</li>
+      <li><b>语言转译</b>：用业务价值说进展，而非技术细节</li>
+      <li><b>重定义产出口径</b>：拓宽评估维度，不只是"新产品数量"</li>
+    </ul>
+  </div>
+
+  <div class="card" id="report">
+    <h3>📈 框架二：向上汇报——把约束翻译成决策语言 <span class="src">Drucker + HBR 向上管理研究</span></h3>
+    <div class="vs">
+      <div class="bad"><span class="tag">❌ 别说（陈述句，让人焦虑）</span>"我们技术能力不够，新产品推不动"</div>
+      <div class="good"><span class="tag">✅ 要说（判断题，让人能行动）</span>"当前技术栈支撑不了 XX 类产品，竞对已在布局，我们有 N 个月窗口，需要在人力/时间/外部合作上做选择"</div>
+    </div>
+    <div class="apply"><b>公式：</b>现状约束 + 业务风险量化 + 时间窗口 + 可选方案 → 请决策层选择。</div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">老板总觉得你们团队"慢"。你委屈地说"我们人手不够"——老板只听到了抱怨，更焦虑，还是没给资源。</p>
+      <p class="move"><b>→ 改法：</b>把陈述句改成决策题："现有 3 人最多支撑 A、B 两个项目，C 项目竞对已上线，我们有 6 周窗口。建议：要么加 1 人保 C，要么砍 C 保质量——您定。" <b>给判断题，老板才能拍板、才会给资源。</b></p></div>
+  </div>
+
+  <div class="card" id="bottleneck">
+    <h3>🔧 框架三：技术/资源瓶颈四类诊断</h3>
+    <table>
+      <tr><th>瓶颈类型</th><th>表现</th><th>解法方向</th></tr>
+      <tr><td><b>能力缺口</b></td><td>团队没人会做</td><td>招人 / 外部合作 / 定向培训</td></tr>
+      <tr><td><b>资源不足</b></td><td>人少事多排不过来</td><td>优先级重排，主动砍需求</td></tr>
+      <tr><td><b>架构债务</b></td><td>老系统拖慢新功能</td><td>专项重构，向上争取时间</td></tr>
+      <tr><td><b>需求不清</b></td><td>产品与技术反复拉锯</td><td>上游定义问题，非下游执行</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="influence">
+    <h3>🔗 框架四：跨部门影响力（无职权影响）<span class="src">Cohen & Bradford 1989</span></h3>
+    <p class="core">没有汇报关系时推动协作的核心逻辑：<b>货币交换</b><span class="plain">用对方想要的东西，换你想要的配合</span>——找到对方在意什么，用对方的语言说你的需求。</p>
+    <svg class="dia" viewBox="0 0 460 196">
+      <rect x="28" y="64" width="120" height="68" rx="14" fill="#eef4ff" stroke="var(--u1)" stroke-width="1.5"/>
+      <text x="88" y="92" text-anchor="middle" font-size="16" font-weight="800" fill="var(--u1)">你</text>
+      <text x="88" y="114" text-anchor="middle" font-size="12" fill="#6a7fa0">你的需求</text>
+      <rect x="312" y="64" width="120" height="68" rx="14" fill="#effaf3" stroke="var(--u2)" stroke-width="1.5"/>
+      <text x="372" y="92" text-anchor="middle" font-size="16" font-weight="800" fill="var(--u2)">对方</text>
+      <text x="372" y="114" text-anchor="middle" font-size="12" fill="#4a8a6a">他的 KPI / 风险</text>
+      <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#b0a48f"/></marker></defs>
+      <line x1="150" y1="84" x2="308" y2="84" stroke="#b0a48f" stroke-width="2" marker-end="url(#ah)"/>
+      <text x="229" y="76" text-anchor="middle" font-size="12" fill="var(--src)" font-weight="700">把需求翻译成「对方的收益」</text>
+      <line x1="310" y1="116" x2="152" y2="116" stroke="#b0a48f" stroke-width="2" marker-end="url(#ah)"/>
+      <text x="229" y="134" text-anchor="middle" font-size="12" fill="var(--src)">对方提供配合（互惠，非单次交易）</text>
+      <text x="229" y="176" text-anchor="middle" font-size="13" font-weight="800" fill="var(--u3)">⇄ 货币交换</text>
+    </svg>
+    <ul class="clean">
+      <li>明确你需要什么（具体、可量化）</li>
+      <li>识别对方的核心利益（KPI、资源、风险）</li>
+      <li>把你的需求翻译成对方的收益</li>
+      <li>建立互惠关系，不是单次交易</li>
+    </ul>
+  </div>
+
+  <div class="card" id="manage-up">
+    <h3>⬆️ 框架五：向上管理——管理你的上级 <span class="src">Drucker《卓有成效的管理者》· Gabarro & Kotter, HBR 1980</span></h3>
+    <p class="core"><b>核心认知：</b>向上管理不是"拍马屁"，是让上下级关系成为<b>双向资源</b>。</p>
+    <ul class="clean">
+      <li><b>理解上级的压力与目标</b>：他被什么 KPI 考核？他的老板在问他什么？</li>
+      <li><b>主动同步，不让上级意外</b>：坏消息早说，进展定期说</li>
+      <li><b>带方案去，不只带问题</b>：每次提问题，附上判断和建议选项</li>
+      <li><b>管理期望，而非承诺一切</b>：宁可低承诺高交付</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 单元六 ============ -->
+<section class="unit" id="u6">
+  <div class="unit-h"><span class="badge" style="background:var(--u6)">6</span>
+    <h2>团队动力学<small>TEAM DYNAMICS · 从"管个人"到"管整个团队"</small></h2></div>
+
+  <div class="card" id="tuckman">
+    <h3>📈 塔克曼团队发展 4 阶段 <span class="src">Bruce Tuckman 1965</span></h3>
+    <p class="core">任何团队都会经历这 4 个阶段，<b>每个阶段管理者的角色完全不同</b>。最关键的认知：震荡期的冲突不是团队坏了，是<b>正常且必经</b>的。</p>
+    <div class="matrix" style="grid-template-columns:repeat(4,1fr)">
+      <div class="cell sc g-easy"><b>① 组建期 Forming</b><small>客气、观望、方向不明</small></div>
+      <div class="cell sc g-hard"><b>② 震荡期 Storming</b><small>冲突爆发、争主导权</small></div>
+      <div class="cell sc g-mid"><b>③ 规范期 Norming</b><small>立规矩、形成默契</small></div>
+      <div class="cell sc g-easy"><b>④ 高效期 Performing</b><small>自驱、高产出</small></div>
+    </div>
+    <table>
+      <tr><th>阶段</th><th>管理者该做什么</th></tr>
+      <tr><td><b>① 组建期</b></td><td>给方向、定规则、明确目标（偏指令型）</td></tr>
+      <tr><td><b>② 震荡期</b></td><td>正视冲突不回避、当裁判促磨合（偏教练型，最难熬）</td></tr>
+      <tr><td><b>③ 规范期</b></td><td>固化流程、逐步放手（偏支持型）</td></tr>
+      <tr><td><b>④ 高效期</b></td><td>充分授权、给挑战、争取资源</td></tr>
+    </table>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">新组的项目组，头两周大家客客气气，第三周突然为"谁说了算""方案选哪个"吵起来，你以为团队要散了。</p>
+      <p class="move"><b>→ 诊断：</b>这是教科书般的<b>震荡期</b>，不是团队失败，反而是健康的信号。你要做的不是压制冲突，而是当裁判把分歧摆上台面、定出协作规则，团队才能进入规范期。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>① 把震荡期的冲突当成"团队不行"而打压——会让团队卡在虚假和谐；② 想跳过震荡直接到高效——没磨合过的团队经不起压力。</div>
+  </div>
+
+  <div class="card" id="safety">
+    <h3>🛡️ 心理安全感 <span class="src">Amy Edmondson 1999 · Google 亚里士多德项目验证</span></h3>
+    <p class="core">指团队成员<b>敢于冒人际风险</b><span class="plain">敢提问、敢认错、敢反对，而不怕被羞辱或报复</span>。Google 大规模研究发现：它是高绩效团队的<b>第一要素</b>，比成员能力更重要。</p>
+    <span class="lbl">管理者怎么建立</span>
+    <ul class="clean">
+      <li><b>领导先示弱</b>：自己先承认"我也不确定/我错了"，团队才敢坦诚</li>
+      <li><b>把失败当学习</b>：复盘问"学到什么"，而不是"谁的错"</li>
+      <li><b>主动邀请异见</b>："谁有不同看法？"并真心感谢提出的人</li>
+    </ul>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">每次开会你问"还有问题吗"，全场点头通过，但项目上线后 bug 不断、问题其实早有人察觉。</p>
+      <p class="move"><b>→ 诊断：</b>"没人反对" ≠ 没问题，很可能是<b>心理安全感不足</b>——大家不敢说。先从你带头认错、不惩罚报坏消息的人开始。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>把"没人反对"当共识；惩罚第一个报告坏消息的人（以后再没人敢说真话）。</div>
+  </div>
+
+  <div class="card" id="lencioni">
+    <h3>🔻 团队五大障碍 <span class="src">Patrick Lencioni《团队协作的五大障碍》2002</span></h3>
+    <p class="core">团队失效是<b>逐层累积</b>的：底层没解决，上层都是空谈。必须<b>自下而上</b>建设。</p>
+    <div style="margin:12px 0">
+      <div class="pyr" style="background:var(--u8);width:96%;margin:4px auto">⑤ 无视结果 · 只顾个人/部门，不为团队整体目标负责</div>
+      <div class="pyr" style="background:#e0726e;width:84%;margin:4px auto">④ 逃避责任 · 不敢互相督促、不指出问题</div>
+      <div class="pyr" style="background:var(--u3);width:72%;margin:4px auto">③ 欠缺投入 · 会上不表态，会后不执行</div>
+      <div class="pyr" style="background:#f0a85e;width:60%;margin:4px auto">② 惧怕冲突 · 为了和气，回避真正的辩论</div>
+      <div class="pyr" style="background:var(--u6);width:48%;margin:4px auto">① 信任缺失 · 不敢暴露弱点（根源）</div>
+    </div>
+    <p class="core" style="text-align:center;font-size:13px;color:var(--mut)">↑ 自下而上建设：先建信任，才有健康冲突，才有真投入、敢担责、重结果</p>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你的团队表面一团和气，开会从不争论，但执行总是打折扣、互相甩锅。</p>
+      <p class="move"><b>→ 诊断：</b>"人造和谐"是<b>信任缺失（障碍①）</b>导致的——因为不信任，所以不敢冲突（②），于是没有真投入（③）。根子在最底层的信任，先从团队建立"敢暴露弱点"的安全感入手。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>追求表面和谐、回避一切冲突——健康团队需要"有建设性的争论"。</div>
+  </div>
+</section>
+
+<!-- ============ 单元七 ============ -->
+<section class="unit" id="u7">
+  <div class="unit-h"><span class="badge" style="background:var(--u7)">7</span>
+    <h2>目标、决策与执行<small>GOALS · DECISIONS · EXECUTION · 从"带人"到"把事做成"</small></h2></div>
+
+  <div class="card" id="okr">
+    <h3>🎯 OKR 目标管理 <span class="src">Andy Grove（Intel）→ John Doerr（Google）</span></h3>
+    <p class="core"><b>O 目标（Objective）</b>：鼓舞人心、定性、有方向感；<b>KR 关键结果（Key Results）</b>：可量化、3–5 个、用来衡量 O 是否达成。</p>
+    <svg class="dia" viewBox="0 0 440 200" style="max-width:420px">
+      <rect x="150" y="10" width="140" height="40" rx="10" fill="#fff6e0" stroke="var(--u7)" stroke-width="1.5"/>
+      <text x="220" y="28" text-anchor="middle" font-size="13" font-weight="800" fill="#b8860b">O · 目标</text>
+      <text x="220" y="43" text-anchor="middle" font-size="10" fill="#a8862e">鼓舞人心、定性</text>
+      <line x1="220" y1="50" x2="90" y2="80" stroke="#d9cfc0"/><line x1="220" y1="50" x2="220" y2="80" stroke="#d9cfc0"/><line x1="220" y1="50" x2="350" y2="80" stroke="#d9cfc0"/>
+      <rect x="20" y="80" width="140" height="44" rx="9" fill="#fdfaf2" stroke="var(--line)"/><text x="90" y="98" text-anchor="middle" font-size="11" font-weight="700">KR1</text><text x="90" y="114" text-anchor="middle" font-size="10" fill="var(--mut)">可量化指标</text>
+      <rect x="150" y="80" width="140" height="44" rx="9" fill="#fdfaf2" stroke="var(--line)"/><text x="220" y="98" text-anchor="middle" font-size="11" font-weight="700">KR2</text><text x="220" y="114" text-anchor="middle" font-size="10" fill="var(--mut)">可量化指标</text>
+      <rect x="280" y="80" width="140" height="44" rx="9" fill="#fdfaf2" stroke="var(--line)"/><text x="350" y="98" text-anchor="middle" font-size="11" font-weight="700">KR3</text><text x="350" y="114" text-anchor="middle" font-size="10" fill="var(--mut)">可量化指标</text>
+      <text x="220" y="158" text-anchor="middle" font-size="11" fill="var(--src)">↑ 公司 O → 团队 O → 个人 O，上下对齐贯通</text>
+    </svg>
+    <table>
+      <tr><th></th><th>OKR</th><th>KPI</th></tr>
+      <tr><td><b>导向</b></td><td>方向、挑战、对齐</td><td>考核、达标</td></tr>
+      <tr><td><b>满分</b></td><td>0.7 即优秀（敢定高目标）</td><td>必须 100% 完成</td></tr>
+      <tr><td><b>用途</b></td><td>聚焦最重要的事</td><td>绩效衡量</td></tr>
+    </table>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你给团队定目标"提升用户体验"，结果三个月后谁也说不清做到没做到。</p>
+      <p class="move"><b>→ 改法：</b>O 保留"打造行业最佳用户体验"，但配上可量化 KR："NPS 从 30→45 / 页面加载 &lt;2s / 客诉率降 50%"。<b>目标要能被衡量，否则就是口号。</b></p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>① 把 OKR 当 KPI 考核——会逼大家把目标定得很保守；② KR 不可量化（"加强""提升"）；③ 一个周期定太多 O，等于没重点。</div>
+  </div>
+
+  <div class="card" id="raci">
+    <h3>🧷 决策与分工：RACI / RAPID <span class="src">RACI 项目管理通用 · RAPID 来自 Bain</span></h3>
+    <p class="core">专治"决策卡壳、互相扯皮、谁都能否决却没人拍板"。核心是<b>明确角色，尤其是唯一的拍板人</b>。</p>
+    <table>
+      <tr><th>RACI（任务分工）</th><th>含义</th></tr>
+      <tr><td><b>R · Responsible</b></td><td>具体执行的人（可多个）</td></tr>
+      <tr><td><b>A · Accountable</b></td><td>最终负责、拍板的人（<b>必须唯一</b>）</td></tr>
+      <tr><td><b>C · Consulted</b></td><td>需事先咨询的人（双向）</td></tr>
+      <tr><td><b>I · Informed</b></td><td>事后知会的人（单向）</td></tr>
+    </table>
+    <p class="core" style="font-size:13px"><b>RAPID</b>（决策版）：Recommend 提建议 · Agree 须同意 · Perform 执行 · Input 提供输入 · <b>Decide 拍板（唯一）</b>。</p>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">一个跨部门项目，三个部门谁都能提反对意见、谁都不肯拍板，拖了一个月没进展。</p>
+      <p class="move"><b>→ 行动：</b>用 RAPID 先明确<b>唯一的 Decider</b>（拍板人），其他部门是 Input/Agree 角色。决策权一清晰，扯皮立刻减少。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>Accountable / Decide 出现多个人 = 没人真正负责。一件事的"拍板人"必须唯一。</div>
+  </div>
+
+  <div class="card" id="eisenhower">
+    <h3>⏳ 艾森豪威尔矩阵（时间与精力管理）</h3>
+    <p class="core">按<b>重要 × 紧急</b>两维分四象限。管理者最该刻意投资的，是<b>"重要不紧急"</b>象限（战略、培养人、建机制）——可惜最容易被"紧急"挤掉。</p>
+    <div class="matrix" style="grid-template-columns:90px 1fr 1fr">
+      <div class="cell axis"></div><div class="cell axis">紧急</div><div class="cell axis">不紧急</div>
+      <div class="cell axis">重要</div>
+      <div class="cell sc g-hard"><b>立刻做</b><small>危机、救火、deadline</small></div>
+      <div class="cell sc g-easy"><b>计划做 ⭐</b><small>战略、培养人、建机制</small></div>
+      <div class="cell axis">不重要</div>
+      <div class="cell sc g-mid"><b>授权出去</b><small>打断、部分会议、杂务</small></div>
+      <div class="cell sc"><b>删除/少做</b><small>刷手机、无效社交</small></div>
+    </div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你每天忙到飞起，全在救火（紧急），但团队能力建设、流程优化这些事永远"没空做"。</p>
+      <p class="move"><b>→ 行动：</b>每周固定划出时间块给"重要不紧急"象限（哪怕 2 小时）。<b>管理者的价值，恰恰在第二象限——不投资它，你很可能长期陷在救火中。</b></p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>被"紧急"绑架，把所有时间花在第一、三象限，忽视真正创造长期价值的"重要不紧急"。</div>
+  </div>
+</section>
+
+<!-- ============ 单元八 ============ -->
+<section class="unit" id="u8">
+  <div class="unit-h"><span class="badge" style="background:var(--u8)">8</span>
+    <h2>冲突、变革与选才<small>CONFLICT · CHANGE · HIRING · 高频刚需场景</small></h2></div>
+
+  <div class="card" id="tki">
+    <h3>⚔️ 托马斯-基尔曼冲突模式 TKI <span class="src">Thomas & Kilmann 1974</span></h3>
+    <p class="core">按<b>关注自己（果断）× 关注他人（合作）</b>分出 5 种应对冲突的方式。<b>没有最好的，看情境选</b>。</p>
+    <div class="matrix" style="grid-template-columns:90px 1fr 1fr">
+      <div class="cell axis"></div><div class="cell axis">低合作</div><div class="cell axis">高合作</div>
+      <div class="cell axis">高果断</div>
+      <div class="cell sc g-hard"><b>竞争 Compete</b><small>我赢你输 · 紧急/原则问题</small></div>
+      <div class="cell sc g-easy"><b>协作 Collaborate ⭐</b><small>双赢 · 重大且时间够</small></div>
+      <div class="cell axis">低果断</div>
+      <div class="cell sc g-mid"><b>回避 Avoid</b><small>都不碰 · 小事/需冷静</small></div>
+      <div class="cell sc g-mid"><b>迁就 Accommodate</b><small>我让你 · 关系比事重要</small></div>
+    </div>
+    <div class="apply" style="margin-top:12px"><b>📖 怎么看这张图：</b>两条轴衡量你在冲突里的两种倾向——<b>纵轴「果断」= 多在意自己的诉求</b>（越往上越想坚持自己的立场和利益）；<b>横轴「合作」= 多在意对方的诉求</b>（越往右越愿意照顾对方的需求和关系）。两两组合就得到四种典型策略：<br>· <b>高果断 + 低合作 → 竞争</b>：只顾赢，不让步<br>· <b>高果断 + 高合作 → 协作</b>：既坚持自己、也满足对方，找双赢<br>· <b>低果断 + 低合作 → 回避</b>：双方诉求都先搁置<br>· <b>低果断 + 高合作 → 迁就</b>：放下自己，成全对方</div>
+    <p class="core" style="text-align:center;font-size:13px">正中间还有 <b>妥协 Compromise</b>：各退一步，快速但非最优。</p>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你有个能力不错的员工，老是和合作方起冲突。</p>
+      <p class="move"><b>→ 用 TKI 诊断：</b>先看他惯用哪种模式——是不是事事"竞争"（强势要赢）？还要判断冲突值不值得：原则问题该坚持（竞争），鸡毛蒜皮可"迁就/回避"，重大长期合作要教他"协作"。<b>关键是教他因情境切换，而不是只会一种。</b></p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>永远用同一种——老好人永远迁就（被欺负）、强势者永远竞争（没朋友）。回避只适合小事，重要冲突回避 = 埋雷。</div>
+  </div>
+
+  <div class="card" id="change">
+    <h3>🔄 变革管理：科特 8 步 + ADKAR <span class="src">John Kotter 1996 · Prosci ADKAR</span></h3>
+    <p class="core">推动变革要<b>组织和个人两个层面一起抓</b>：科特 8 步管"组织怎么变"，ADKAR 管"每个人怎么变"。</p>
+    <span class="lbl">科特 8 步（组织层面）</span>
+    <div class="chain" style="font-size:12px">
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">①建立紧迫感</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">②组建联盟</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">③定愿景</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">④沟通愿景</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">⑤授权行动</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">⑥短期胜利</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">⑦巩固扩大</span><span class="arr">→</span>
+      <span class="node" style="border-color:var(--u8);color:var(--u8);background:#fdf2f2">⑧融入文化</span>
+    </div>
+    <span class="lbl">ADKAR（个人层面 · 一个人接受变革的 5 关）</span>
+    <div class="chain">
+      <span class="node">A 认知<br><small>知道要变</small></span><span class="arr">→</span>
+      <span class="node">D 意愿<br><small>想要变</small></span><span class="arr">→</span>
+      <span class="node">K 知识<br><small>知道怎么变</small></span><span class="arr">→</span>
+      <span class="node">A 能力<br><small>能做到</small></span><span class="arr">→</span>
+      <span class="node">R 巩固<br><small>不回退</small></span>
+    </div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你推一套新流程/新工具，发了通知、开了会，但大家就是不用，照旧用老办法。</p>
+      <p class="move"><b>→ 诊断：</b>用 ADKAR 查卡在哪关——发通知只解决了 A（认知），大多数人卡在 <b>D（意愿）</b>：他们没看到"对我有什么好处"。先解决"为什么要变、对你有何好处"，再谈怎么用。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>① 以为"发了通知"变革就会发生（只做了第①④步）；② 不设计"短期胜利"（第⑥步），导致中途疲劳放弃。</div>
+  </div>
+
+  <div class="card" id="hiring">
+    <h3>🎓 结构化招聘 + 30-60-90 融入</h3>
+    <p class="core">"识别高潜"（单元一）是对内，这里是对外：<b>怎么招对人、怎么带新人上手</b>。</p>
+    <span class="lbl">结构化面试（比"凭眼缘"准得多）</span>
+    <ul class="clean">
+      <li><b>同岗位问同样的问题</b>，用同一张评分表打分，减少主观偏差</li>
+      <li><b>以行为题为主，假设题为辅</b>：优先用 STAR 追问"你<u>曾经</u>怎么做的"（预测效度最高）；"如果…你会怎么做"这类假设题作为补充，适合考察候选人没有相关经历的情况或其判断思路</li>
+      <li>多个面试官<b>独立打分</b>再汇总，避免互相带节奏</li>
+    </ul>
+    <span class="lbl">30-60-90 天 onboarding</span>
+    <table>
+      <tr><td><b>前 30 天</b></td><td>学习融入：熟悉业务、人、流程，不急于产出</td></tr>
+      <tr><td><b>60 天</b></td><td>小步贡献：独立完成有限范围的任务</td></tr>
+      <tr><td><b>90 天</b></td><td>独立产出：能对核心职责负责</td></tr>
+    </table>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">上次招人凭"聊得来"，结果入职后发现能力对不上，三个月就走了。</p>
+      <p class="move"><b>→ 改法：</b>面试时问行为题——"讲一个你<u>实际</u>搞定难题的例子"（STAR 追问细节），比"你觉得自己抗压吗"靠谱得多。入职后用 30-60-90 给清晰预期，别扔进去不管。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>① 只问假设题和"你觉得自己…"（人人都会说漂亮话）；② 新人入职扔进去自生自灭，前 30 天最容易流失。</div>
+  </div>
+</section>
+
+<!-- ============ 单元九 ============ -->
+<section class="unit" id="u9">
+  <div class="unit-h"><span class="badge" style="background:var(--u9)">9</span>
+    <h2>领导力进阶<small>ADVANCED LEADERSHIP · 关于"你自己"</small></h2></div>
+
+  <div class="card" id="goleman">
+    <h3>🎭 戈尔曼 6 种领导风格 <span class="src">Daniel Goleman, HBR 2000</span></h3>
+    <p class="core">情商研究者戈尔曼提出 6 种风格。<b>高手会根据情境切换</b>，而不是只会一种。前 4 种通常正面，后 2 种（领跑/命令）要慎用。</p>
+    <table>
+      <tr><th>风格</th><th>口头禅 / 内核</th><th>适用</th></tr>
+      <tr><td><b>远见型</b> Visionary</td><td>"跟我来，往这个方向"</td><td>需要新方向时，最正面</td></tr>
+      <tr><td><b>教练型</b> Coaching</td><td>"试试这样，我帮你成长"</td><td>培养人、长期发展</td></tr>
+      <tr><td><b>亲和型</b> Affiliative</td><td>"人最重要"</td><td>修复关系、团队受挫时</td></tr>
+      <tr><td><b>民主型</b> Democratic</td><td>"你们怎么看？"</td><td>需要共识、集思广益</td></tr>
+      <tr><td><b>领跑型</b> Pacesetting</td><td>"照我做，跟上"</td><td>⚠️ 慎用，易累垮团队</td></tr>
+      <tr><td><b>命令型</b> Commanding</td><td>"照我说的做"</td><td>⚠️ 仅限危机/救火</td></tr>
+    </table>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">同样是你，带新人和处理线上事故，该用一样的方式吗？</p>
+      <p class="move"><b>→ 答：</b>线上事故（危机）用<b>命令型</b>快速止损；带新人长期发展用<b>教练型</b>。<b>风格要随情境切换——只会一种的领导者，迟早会在某个场景翻车。</b></p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>常年用"领跑型"（自己冲在前、嫌别人慢）——短期出活，长期累垮团队、培养不出人。</div>
+  </div>
+
+  <div class="card" id="drive">
+    <h3>🚀 驱动力 3.0：现代内在激励 <span class="src">Daniel Pink《Drive》2009</span></h3>
+    <p class="core">经典激励理论（单元三）偏"外在"，Pink 补上当代视角：对<b>知识/创造性工作</b>，胡萝卜大棒（钱）不仅失效，有时还<b>有害</b>。真正的内在动力来自三要素：</p>
+    <div class="chain">
+      <span class="node" style="border-color:var(--u9);color:var(--u9);background:#f6f1fc">自主 Autonomy<br><small>对工作有掌控权</small></span>
+      <span class="node" style="border-color:var(--u9);color:var(--u9);background:#f6f1fc">精通 Mastery<br><small>能力不断精进</small></span>
+      <span class="node" style="border-color:var(--u9);color:var(--u9);background:#f6f1fc">目的 Purpose<br><small>工作有意义</small></span>
+    </div>
+    <div class="case"><div class="ct">💼 职场案例</div>
+      <p class="scene">你想激励一个核心研发，奖金给了，他却越来越没劲。</p>
+      <p class="move"><b>→ 诊断：</b>对创造性工作者，钱过了某个点就不再激励。给他<b>自主</b>（选自己想做的方向）、<b>精通</b>（有挑战和成长）、<b>目的</b>（让他看到工作的意义），往往比奖金更有效——这和期望理论的"价值契合"是相通的。</p></div>
+    <div class="warn"><b>⚠️ 反模式：</b>对创造性、需要内驱的工作，用纯金钱/KPI 强激励——可能挤掉内在动机，反而降低创造力。</div>
+  </div>
+</section>
+
+<!-- ============ 自测 ============ -->
+<section class="unit" id="quiz">
+  <div class="quiz-h"><span class="badge">✓</span>
+    <h2>自测题 · 检验掌握程度<small>SELF-TEST · 20 道情境题，先想答案再点开</small></h2></div>
+  <p style="color:var(--mut);font-size:14px;margin-bottom:20px">建议：每题先在心里答一遍（用哪个框架 + 怎么做），再点开对答案。能答对 14 题以上，说明你已经能用框架思考了。</p>
+
+  <details class="q"><summary><span class="qn">1</span>新人热情很高但完全不会做，你应该？<span class="qtag">单元二</span></summary>
+    <div class="ans"><span class="key">手把手教（情境矩阵 ①，低能力+高意愿）。</span>
+    <div class="why">示范→陪练→独立，密集反馈，出错前纠正。最常见错误是直接"充分授权"——新人会懵、信心受挫。</div></div></details>
+
+  <details class="q"><summary><span class="qn">2</span>能力很强的老员工最近躺平了，第一步该做什么？<span class="qtag">单元二/三</span></summary>
+    <div class="ans"><span class="key">先 1:1 搞清"为什么躺平"，别直接激励。</span>
+    <div class="why">高能力+低意愿（矩阵 ⑥ 重塑动机）。用期望理论找断点：是"兑现信任"断了（拼了没回报），还是"价值契合"断了（看不到意义）。不问原因直接打鸡血，效果为零。</div></div></details>
+
+  <details class="q"><summary><span class="qn">3</span>给团队普涨薪后，士气只高了两个月又回落。为什么？<span class="qtag">单元三</span></summary>
+    <div class="ans"><span class="key">薪资是"保健因素"，不是"激励因素"（双因素理论）。</span>
+    <div class="why">钱只能消除不满，不能持续激励。真正点燃人的是成就感、认可、成长、责任感。</div></div></details>
+
+  <details class="q"><summary><span class="qn">4</span>接手一个交付总延期的团队，怎么系统地找病根？<span class="qtag">单元一</span></summary>
+    <div class="ans"><span class="key">用麦肯锡 7S 扫描，找最薄弱的那个 S。</span>
+    <div class="why">别一上来逼加班（把症状当病根）。可能是 Systems（缺需求评审流程）而非 Skills。先改最弱的一个 S。</div></div></details>
+
+  <details class="q"><summary><span class="qn">5</span>老板总觉得你团队"没产出"，但你们其实做了很多基础建设。怎么破？<span class="qtag">单元五</span></summary>
+    <div class="ans"><span class="key">这多半是"信息不对称"（认知问题），不是真没产出。</span>
+    <div class="why">三动作：过程可见化（里程碑主动同步）+ 语言转译（说业务价值不说技术细节）+ 重定义产出口径。先分清是"认知问题 A"还是"资源问题 B"，别混着解。</div></div></details>
+
+  <details class="q"><summary><span class="qn">6</span>向上汇报时，"我们人手不够做不完"这句话错在哪？<span class="qtag">单元五</span></summary>
+    <div class="ans"><span class="key">这是陈述句（让人焦虑），应改成判断题（让人能行动）。</span>
+    <div class="why">公式：现状约束 + 业务风险量化 + 时间窗口 + 可选方案 → 请决策层选。给老板选择题，他才能拍板给资源。</div></div></details>
+
+  <details class="q"><summary><span class="qn">7</span>员工说"我每天活都做完了啊"，但你嫌他不主动。问题可能在哪？<span class="qtag">单元一/二</span></summary>
+    <div class="ans"><span class="key">他卡在执行质量的"做完"层，且你可能从没设定过"主动"的期望。</span>
+    <div class="why">执行四层次：做了→做完→做对→做好。先用"设定期望"明确你要的是什么，再用"引导自主"（⑤，加提案环节）推他往上走。</div></div></details>
+
+  <details class="q"><summary><span class="qn">8</span>跨部门同事不归你管，怎么推动他配合你？<span class="qtag">单元五</span></summary>
+    <div class="ans"><span class="key">无职权影响力（Cohen & Bradford）——"货币交换"。</span>
+    <div class="why">找到对方在意什么（KPI/风险），把你的需求翻译成对方的收益，建立互惠而非单次交易。</div></div></details>
+
+  <details class="q"><summary><span class="qn">9</span>明星员工提离职，留才的第一步是？<span class="qtag">单元四</span></summary>
+    <div class="ans"><span class="key">真诚挽留 → 倾听诉求 → 分析判别（可解决/不可解决）→ 有条件接一接。</span>
+    <div class="why">关键是先判断他的诉求你能不能解决，而不是盲目加薪或一口答应所有条件。</div></div></details>
+
+  <details class="q"><summary><span class="qn">10</span>表扬员工时说"你最近表现很好"，为什么效果一般？<span class="qtag">单元三</span></summary>
+    <div class="ans"><span class="key">强化要"及时 + 具体"才有效（强化理论）。</span>
+    <div class="why">用 STAR 把表扬说具体："上次那个客户投诉（S/T），你主动连夜跟进（A），最后客户续约了（R）"——这样才知道好在哪、才会重复。</div></div></details>
+
+  <details class="q"><summary><span class="qn">11</span>能力强但态度消极、影响团队氛围的人，能因为他能力强就忍吗？<span class="qtag">单元二/四</span></summary>
+    <div class="ans"><span class="key">不能。该上"警示对话"（矩阵 ⑨）。</span>
+    <div class="why">说影响→探原因→明确边界→约定改变节点。这类人传染性最强，容忍 = 默许，会带坏整个团队。</div></div></details>
+
+  <details class="q"><summary><span class="qn">12</span>辅导一个"有基础有热情、等待突破"的员工，最好的方式？<span class="qtag">单元二</span></summary>
+    <div class="ans"><span class="key">GROW 教练模型（矩阵 ④）：用提问引导，少给答案。</span>
+    <div class="why">Goal 目标→Reality 现状→Options 选择→Will 行动意愿。让他自己发现路径，成长才扎实。注意：低意愿的人不能用 GROW，得先解决动机。</div></div></details>
+
+  <details class="q"><summary><span class="qn">13</span>团队氛围差、不知从哪改起，有没有量化的抓手？<span class="qtag">单元三</span></summary>
+    <div class="ans"><span class="key">盖洛普 Q12 匿名打分，找最低分项优先改。</span>
+    <div class="why">12 问分四层（基本需求→管理支持→团队归属→成长）。把"氛围差"这种模糊感受，定位到具体可改的那一两项。</div></div></details>
+
+  <details class="q"><summary><span class="qn">14</span>判断一个下属"有没有培养潜力"，看绩效高就够了吗？<span class="qtag">单元一</span></summary>
+    <div class="ans"><span class="key">不够。绩效高 ≠ 潜力高，要看高潜 10 维度综合。</span>
+    <div class="why">尤其是"领导意愿、影响他人、学习能力、认知复杂度"这几项——一个绩效好但不愿带人、学不动新东西的人，未必是好的领导苗子。</div></div></details>
+
+  <details class="q"><summary><span class="qn">15</span>新组的团队蜜月期后突然吵成一团，是团队不行了吗？<span class="qtag">单元六</span></summary>
+    <div class="ans"><span class="key">不是，这是塔克曼的"震荡期"，正常且必经。</span>
+    <div class="why">别打压冲突，当裁判把分歧摆上台面、定协作规则，团队才能进入规范期、最终到高效期。想跳过震荡直接高效，团队反而经不起压力。</div></div></details>
+
+  <details class="q"><summary><span class="qn">16</span>开会你问"还有问题吗"，全场通过，但上线后 bug 不断。问题在哪？<span class="qtag">单元六</span></summary>
+    <div class="ans"><span class="key">心理安全感不足——大家不敢说，不是没问题。</span>
+    <div class="why">"没人反对"≠共识。从你带头认错、不惩罚报坏消息的人、主动邀请异见开始建立安全感。</div></div></details>
+
+  <details class="q"><summary><span class="qn">17</span>目标定成"提升用户体验"，为什么落不了地？<span class="qtag">单元七</span></summary>
+    <div class="ans"><span class="key">缺可量化的关键结果（OKR 的 KR）。</span>
+    <div class="why">O 可以鼓舞人心，但必须配上能衡量的 KR，如"NPS 30→45、加载&lt;2s"。目标不能被衡量，就只是口号。</div></div></details>
+
+  <details class="q"><summary><span class="qn">18</span>跨部门项目谁都能否决、谁都不拍板，怎么破？<span class="qtag">单元七</span></summary>
+    <div class="ans"><span class="key">用 RACI/RAPID 明确唯一的"拍板人"（Accountable/Decide）。</span>
+    <div class="why">一件事的最终负责人必须唯一，其他人是 Input/Consulted 角色。决策权一清晰，扯皮立刻减少。</div></div></details>
+
+  <details class="q"><summary><span class="qn">19</span>推新流程，发了通知开了会，但没人用。卡在哪？<span class="qtag">单元八</span></summary>
+    <div class="ans"><span class="key">用 ADKAR 看，多半卡在 D（意愿）。</span>
+    <div class="why">发通知只解决了 A（认知），大家没看到"对我有什么好处"。先解决"为什么要变、对你有何好处"，再教怎么用。</div></div></details>
+
+  <details class="q"><summary><span class="qn">20</span>给核心研发发了奖金，他却越来越没劲，为什么？<span class="qtag">单元九</span></summary>
+    <div class="ans"><span class="key">对创造性工作，钱过了某点就不再激励（驱动力3.0）。</span>
+    <div class="why">给自主（选方向）、精通（有成长）、目的（看到意义），比奖金更有效。这与期望理论的"价值契合"相通。</div></div></details>
+</section>
+
+<div class="foot">
+  管理理论学习手册 · 整理自 management-frameworks skill<br>
+  理论引用规范：成熟学术理论标作者+年份 · 实践框架标来源机构/书籍 · 记忆口诀标注"实践整合"
+</div>
+
+</main>
+</div>
+<a href="#top" class="totop" title="回到顶部">↑</a>
+</body>
+</html>
